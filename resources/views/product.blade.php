@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Интернет Магазин: Все Категории</title>
+    <title>Интернет Магазин: Товар</title>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="/js/jquery.min.js"></script>
@@ -23,7 +22,7 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li ><a href="http://internet-shop.tmweb.ru">Все товары</a></li>
-                <li class="active"><a href="http://internet-shop.tmweb.ru/categories">Категории</a>
+                <li ><a href="http://internet-shop.tmweb.ru/categories">Категории</a>
                 </li>
                 <li ><a href="http://internet-shop.tmweb.ru/basket">В корзину</a></li>
                 <li><a href="http://internet-shop.tmweb.ru/reset">Сбросить проект в начальное состояние</a></li>
@@ -49,17 +48,22 @@
 
 <div class="container">
     <div class="starter-template">
-        @foreach($categories as $category)
-        <div class="panel">
-            <a href="/{{ $category->code }}">
-                <img src="http://internet-shop.tmweb.ru/storage/categories/mobile.jpg">
-                <h2>{{ $category->name }}</h2>
-            </a>
-            <p>
-                {{ $category->description }}
-            </p>
+        <h1>iPhone X 64GB - {{ $product }}</h1>
+        <h2>Мобильные телефоны</h2>
+        <p>Цена: <b>71990 ₽</b></p>
+        <img src="http://internet-shop.tmweb.ru/storage/products/iphone_x.jpg">
+        <p>Отличный продвинутый телефон с памятью на 64 gb</p>
+
+
+        <span>product.not_available</span>
+        <br>
+        <span>Сообщить мне, когда товар появится в наличии:</span>
+        <div class="warning">
         </div>
-        @endforeach
+        <form method="POST" action="http://internet-shop.tmweb.ru/subscription/1">
+            <input type="hidden" name="_token" value="TVtVOjV1tVsMnT0alZlxsBMs9kloBlfYhGtTqsQB">            <input type="text" name="email"></input>
+            <button type="submit">Отправить</button>
+        </form>
     </div>
 </div>
 </body>
