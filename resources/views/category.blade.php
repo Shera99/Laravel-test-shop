@@ -5,7 +5,8 @@
 @section('content')
     <div class="starter-template">
         <h1>
-            {{ $category->name }}
+            {{ $category->name }} {{ $category->products->count() }}
+            <!-- dump($category->products->last() or first()) -->
         </h1>
 
         @if($category->description !== '')
@@ -15,9 +16,9 @@
         @endif
 
         <div class="row">
-
-            @include('card', ['category' => $category])
-
+            @foreach($category->products as $product)
+                @include('card', compact('category', 'product'))
+            @endforeach
         </div>
     </div>
 @endsection

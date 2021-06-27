@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
     public function index()
     {
-        return view('index');
+        $products = Product::get();
+        return view('index', compact('products'));
     }
 
     public function categories()
@@ -21,6 +23,8 @@ class MainController extends Controller
     public function category($code)
     {
         $category = Category::where('code', $code)->first();
+
+        //$products = Product::where('category_id', $category->id)->get();
 
         return view('category', compact('category'));
     }
