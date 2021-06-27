@@ -14,8 +14,9 @@ use App\Http\Controllers\MainController;
 |
 */
 
-Route::get('/', [MainController::class, 'index']);
-Route::get('/categories', [MainController::class, 'categories']);
-Route::get('/{category}', [MainController::class, 'category']);
-Route::get('/mobiles/{product?}', [MainController::class, 'product']);
-
+Route::get('/', [MainController::class, 'index'])->name('index');
+Route::get('/categories', [MainController::class, 'categories'])->name('categories');
+Route::get('/{category}', [MainController::class, 'category'])->name('category');
+Route::get('/{category}/{product?}', [MainController::class, 'product'])->name('product');
+Route::get('/basket', [MainController::class, 'basket'])->name('basket');
+Route::get('/basket/place', [MainController::class, 'basketPlace'])->name('basket-place');
