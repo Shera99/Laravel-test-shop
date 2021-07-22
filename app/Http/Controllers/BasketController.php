@@ -26,7 +26,7 @@ class BasketController extends Controller
     {
         $orderId = session('orderId');
         if (is_null($orderId)) {
-            $order = Order::create()->id;
+            $order = Order::create();
             session(['orderId' => $order->id]);
         } else {
             $order = Order::find($orderId);
@@ -44,6 +44,30 @@ class BasketController extends Controller
     }
 
     public function basketRemove($productId)
+    {
+       $orderId = session('orderId');
+       if (is_null($orderId)) {
+           return redirect()->route('basket');
+       }
+       $order = Order::find($orderId);
+
+       if ($order->products->contains($productId)) {
+           $orderPivot = $order->products()->where('product_id', $productId)->first()->pivot;
+           if ($orderPivot->count > 1) {
+               $orderPivot->count--;
+               $orderPivot->update();
+           } else {
+               $order->products()->detach($productId);
+           }
+       }
+
+       return redirect()->route('basket');
+    }
+
+    /*
+     * Для тестирования git pull
+     */
+    public function basketRemove1($productId)
     {
        $orderId = session('orderId');
        if (is_null($orderId)) {
