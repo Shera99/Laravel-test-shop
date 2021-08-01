@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('status')->default(0);
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

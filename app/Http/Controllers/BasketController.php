@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class BasketController extends Controller
@@ -14,12 +15,36 @@ class BasketController extends Controller
             $order = Order::findOrFail($orderId);
         }
 
-        return view('basket', compact('order'));
+        return isset($order) ? view('basket', compact('order')) : view('basket');
     }
 
     public function basketPlace()
     {
-        return view('order');
+        $orderId = session('orderId');
+        if (is_null($orderId)) {
+            return redirect()->route('index');
+        } else {
+            $order = Order::findOrFail($orderId);
+            return view('order', compact('order'));
+        }
+    }
+
+    public function basketConfirm(Request $request)
+    {
+        $orderId = session('orderId');
+        if (is_null($orderId)) {
+            return redirect()->route('index');
+        }
+        $order = Order::find($orderId);
+        $response = $order->saveOrder($request->name, $request->phone, $request->email);
+
+        if ($response) {
+            session()->flash('success', 'Ваш заказ принят в обработку!');
+        } else {
+            session()->flash('warning', 'Ошибка! Заказ не был принят в обработку.');
+        }
+
+        return redirect()->route('index');
     }
 
     public function basketAdd($productId)
@@ -40,6 +65,9 @@ class BasketController extends Controller
             $order->products()->attach($productId);
         }
 
+        $productName = Product::find($productId)->name;
+        session()->flash('add_basket', 'Товар '.$productName.' добавлен в корзину!');
+
         return redirect()->route('basket');
     }
 
@@ -58,6 +86,7 @@ class BasketController extends Controller
                $orderPivot->update();
            } else {
                $order->products()->detach($productId);
+               session()->forget('orderId');
            }
        }
 
